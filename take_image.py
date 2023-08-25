@@ -13,7 +13,7 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 
 ## Tries to initialize the sensor
 try:
-    f = PyFingerprint('/dev/ttyUSB2', 57600, 0xFFFFFFFF, 0x00000000)
+    f = PyFingerprint('/dev/ttyUSB1', 115200, 0xFFFFFFFF, 0x00000000)
 
     if ( f.verifyPassword() == False ):
         raise ValueError('The given fingerprint sensor password is wrong!')
@@ -37,7 +37,8 @@ try:
     print('Downloading image (this take a while)...')
 
     # imageDestination =  tempfile.gettempdir() + '/fingerprint.bmp'
-    imageDestination =  './fingerprint.bmp'
+    # imageDestination =  './samples/4.bmp'
+    imageDestination =  './result.bmp'
     f.downloadImage(imageDestination)
 
     print('The image was saved to "' + imageDestination + '".')

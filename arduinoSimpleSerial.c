@@ -4,11 +4,11 @@
 SoftwareSerial mySerial(10, 11); // RX, TX
 
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(115200);
   mySerial.begin(57600);
 }
 
-void loop() { // run over and over
+void loop() { 
   if (mySerial.available()) {
     Serial.write(mySerial.read());
   }
