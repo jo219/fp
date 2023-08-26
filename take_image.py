@@ -6,7 +6,9 @@
 
 import tempfile
 from pyfingerprint.pyfingerprint import PyFingerprint
-
+from compare2 import find_best_match
+from compare3 import compare
+import pygame
 
 ## Reads image and download it
 ##
@@ -27,23 +29,42 @@ except Exception as e:
 print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
 
 ## Tries to read image and download it
-try:
-    print('Waiting for finger...')
+while True:
+    try:
+        print('Waiting for finger...')
 
-    ## Wait that finger is read
-    while ( f.readImage() == False ):
-        pass
+        ## Wait that finger is read
+        while ( f.readImage() == False ):
+            pass
 
-    print('Downloading image (this take a while)...')
+        print('Downloading image (this take a while)...')
 
-    # imageDestination =  tempfile.gettempdir() + '/fingerprint.bmp'
-    # imageDestination =  './samples/4.bmp'
-    imageDestination =  './result.bmp'
-    f.downloadImage(imageDestination)
+        # # registering mode
+        # n = input("dest: ")
+        # imageDestination =  './samples/'+ n +'.bmp'
 
-    print('The image was saved to "' + imageDestination + '".')
+        # exec mode
+        imageDestination =  './result.bmp'
 
-except Exception as e:
-    print('Operation failed!')
-    print('Exception message: ' + str(e))
-    exit(1)
+        f.downloadImage(imageDestination)
+
+        print('The image was saved to "' + imageDestination + '".')
+        
+        # # from compare3
+        # compare()
+
+        # from compare2
+        best_match_file, best_score = find_best_match(imageDestination, "./samples")
+
+        if best_match_file:
+            print("Best Match: " + best_match_file)
+            print("Score: {:.2f}%".format(best_score))
+        else:
+            print("No matches found.")
+
+    except Exception as e:
+        print('Operation failed!')
+        print('Exception message: ' + str(e))
+        exit(1)
+
+    
