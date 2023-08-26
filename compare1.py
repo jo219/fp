@@ -29,8 +29,6 @@ for file in os.listdir(ref_dir):
     matches = cv2.FlannBasedMatcher({'algorithm': 1, 'trees': 10}, {}).knnMatch(descriptors_1, descriptors_2, k=2)
     match_points = []
 
-    # print(matches)
-    # print(match_points)
     
     for p, q in matches:
         if p.distance < 0.1 * q.distance:
@@ -38,7 +36,7 @@ for file in os.listdir(ref_dir):
 
     keypoints = min(len(keypoints_1), len(keypoints_2))
 
-    # print(keypoints)
+    print(len(match_points))
 
     if keypoints > 0 and len(match_points) / keypoints * 100 > best_score:
         print("it's here")
